@@ -1,49 +1,55 @@
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
+int contador() {
+    int tamanho = 16;
 
-void girarlinha(char linha[], int tamanho){
+    char Original[tamanho];
 
-    char rotacao = linha[tamanho -1];
-    for (int i=tamanho - 1; i > 0; --i ){
-        linha[i] = linha[i-1];
+    cout << "Digite o texto: ";
+    cin.getline(Original, tamanho);
+
+    int Qntd_Caracteres = strlen(Original);
+
+    cout << "A quantidade de caracteres na string é: " << Qntd_Caracteres << endl;
+
+    return Qntd_Caracteres;  // Retorna a quantidade de caracteres
+}
+
+void lerdezesseis() {
+    const int tamanhoPorcao = 16;
+    char porcao[tamanhoPorcao];
+
+    cout << "Digite os caracteres (pressione Enter para finalizar):" << endl;
+
+    while (true) {
+        // Chama a função contador e obtém a quantidade de caracteres
+        int bytesRead = contador();
+
+        // Se há caracteres lidos, faça algo com a porção
+        if (bytesRead > 0) {
+            // Lê uma porção de 16 caracteres ou menos
+            cin.read(porcao, min(tamanhoPorcao, bytesRead));
+
+            // Exemplo: Imprime os caracteres lidos
+            for (int i = 0; i < min(tamanhoPorcao, bytesRead); ++i) {
+                cout << porcao[i];
+            }
+            cout << endl;
+        }
+
+        // Verifica se atingiu o final da entrada
+        if (bytesRead < tamanhoPorcao) {
+            break;
+        }
     }
-    linha[0] = rotacao;
-} 
-
+}
 
 int main() {
-    // Tamanho máximo da sequência
-    const int MAX_TAMANHO = 100;
-
-    // Solicita ao usuário inserir uma sequência
-    cout << "Digite uma sequencia de caracteres (letras ou numeros): ";
-    char sequencia[MAX_TAMANHO];
-    cin.getline(sequencia, MAX_TAMANHO);
-
-    // Obtém o tamanho da sequência
-    int tamanho = 0;
-    while (sequencia[tamanho] != '\0') {
-        ++tamanho;
-    }
-
-    // Cria uma matriz para armazenar a sequência
-    char matriz[MAX_TAMANHO][MAX_TAMANHO];
-
-    // Preenche a matriz com a sequência
-    for (int i = 0; i < tamanho; ++i) {
-        matriz[0][i] = sequencia[i];
-    }
-
-    // Exibe a matriz
-    cout << "Matriz resultante:" << endl;
-    for (int i = 0; i < tamanho; ++i) {
-        cout << matriz[0][i] << " ";
-    }
-    cout << endl;
-
-
+    // Chama a função para ler porções de 16 caracteres da entrada do usuário
+    lerdezesseis();
 
     return 0;
 }
